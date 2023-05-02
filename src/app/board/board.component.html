@@ -1,0 +1,37 @@
+<div class="column">
+  <div class="card box-div">
+    <article class="panel is-info">
+      <p class="panel-heading">
+        Ожидаемые запуски
+      </p>
+      <div class="card-content">
+        <ul>
+
+          <li class="rocket-line" *ngFor="let launch of get_launches.launches">
+            <a [routerLink]="['launch', launch.id]">
+              <div class="columns rocket-row">
+                <div class="column is-one-fifth div-webcast">
+                  <p class="p-webcast-waiting" *ngIf="!launch.webcast_live">Не в эфире</p>
+                  <p class="p-webcast" *ngIf="launch.webcast_live">В эфире</p>
+                </div>
+                <div class="column is-one-fifth div-rocket-img">
+                  <img class="rocket-img" src="{{launch.image}}">
+                </div>
+                <div class="column is-one-fifths rocket-title">
+                  <h5>{{launch.name}}</h5>
+                </div>
+                <div class="column is-two-fifth rocket-date">
+                  <p>Начало: {{launch.window_start}}</p>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <footer class="card-footer">
+        <button (click)="get_previous" class="card-footer-item button page-button">🡸</button>
+        <button (click)="get_next" class="card-footer-item button page-button">🡺</button>
+      </footer>
+      </article>
+  </div>
+</div>

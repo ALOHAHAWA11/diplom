@@ -1,0 +1,100 @@
+.box-div {
+  width: 90%;
+  margin-left: 5%;
+  background-color: #F3EFF8FF;
+  padding-left: 0;
+  padding-right: 0;
+  border-radius: 10px;
+}
+
+.rocket-img {
+  border-radius: 50px;
+  min-width: 100px;
+  min-height: 100px;
+  max-width: 100px;
+  max-height: 100px;
+  margin: auto;
+}
+
+.div-rocket-img {
+  text-align: center;
+}
+
+.rocket-row {
+  border-bottom: 1px solid #1111;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.rocket-row:hover {
+  border-bottom: 1px solid lightskyblue;
+  background-color: #1111;
+  transition: 0.75s;
+}
+
+.rocket-row:active {
+  background-color: #1115;
+}
+.panel {
+  margin: 0;
+  padding: 0;
+}
+
+.rocket-title {
+  margin: auto;
+  text-align: center;
+}
+
+.rocket-date {
+  margin: auto;
+}
+
+li {
+  list-style-type: none;
+}
+
+ul {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.launches-card {
+  /*padding-right: 0;*/
+  padding-left: 0;
+}
+ .launches-title {
+   margin-left: 25px;
+ }
+
+ .div-webcast {
+   margin: auto;
+   text-align: center;
+ }
+
+ .p-webcast {
+   border: 2px solid #dc3333;
+   color: #dc3333;
+   border-radius: 15px;
+ }
+
+ .p-webcast-waiting {
+   border: 2px solid #3e8ed0;
+   color: #3e8ed0;
+   border-radius: 15px;
+ }
+
+ .page-button {
+   border: none;
+   background-color: #F3EFF8FF;
+   border-radius: 15px;
+   outline: none;
+ }
+
+ .page-button:hover {
+   background-color: #1111;
+   transition: 0.75s;
+ }
+ .page-button:focus {
+   border: none;
+ }
