@@ -4,6 +4,7 @@ import {RocketDTO} from "../DTO/RocketDTO";
 import {ActivatedRoute} from "@angular/router";
 import {LaunchesService} from "../service/launches.service";
 import {LaunchDTO} from "../DTO/LaunchDTO";
+import {AuthService} from "../service/auth.service";
 
 @Component({
   selector: 'app-launch',
@@ -15,12 +16,26 @@ export class LaunchComponent {
   private _subscription$: Subscription = new Subscription();
   private _launch: LaunchDTO = new LaunchDTO();
 
-  constructor(private _launchesService: LaunchesService, private activateRoute: ActivatedRoute) {
+  private _comment: string = ''
+
+  constructor(private _launchesService: LaunchesService, private activateRoute: ActivatedRoute, private _auth: AuthService) {
     this._id = activateRoute.snapshot.params['id']
     this._subscription$ = this._launchesService.getLaunch(this._id).subscribe((data: any) => this._launch = data)
   }
 
   public getLaunch() {
     return this._launch;
+  }
+
+  public isAuthenticated() {
+    return this._auth.isAuthenticated()
+  }
+
+  get comment(): string {
+    return this._comment;
+  }
+
+  set comment(value: string) {
+    this._comment = value;
   }
 }

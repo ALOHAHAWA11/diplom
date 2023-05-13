@@ -1,0 +1,42 @@
+<div class="columns is-centered register-card">
+  <div class="column is-4">
+    <div class="card">
+      <div class="card-content">
+        <form action="post" #registerForm="ngForm">
+          <div class="field">
+            <label class="label">Логин</label>
+            <div class="control">
+              <input [(ngModel)]="username" name="username" id="username" class="input" type="text">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input [(ngModel)]="email" name="email" id="email" class="input" type="email">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Пароль</label>
+            <div class="control">
+              <input [(ngModel)]="password" name="password" id="password" class="input" type="password">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Повтор пароля</label>
+            <div class="control">
+              <input [(ngModel)]="re_password" name="re_password" id="re_password" class="input" type="password">
+            </div>
+          </div>
+          <div class="field is-grouped">
+            <div class="control">
+              <button #submitButton [disabled]="registerForm.invalid" (click)="submit(registerForm)"
+                      class="button is-info">
+                Зарегистрироваться
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

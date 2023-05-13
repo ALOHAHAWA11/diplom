@@ -1,8 +1,11 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import * as am4core from "@amcharts/amcharts4/core"
 import * as am4maps from "@amcharts/amcharts4/maps"
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow"
 import am4themes_animated from "@amcharts/amcharts4/themes/animated"
+import {LaunchesDTO} from "../DTO/LaunchesDTO";
+import {Subscription} from "rxjs";
+import {GlobeService} from "../service/globe.service";
 
 
 am4core.useTheme(am4themes_animated)
@@ -12,10 +15,18 @@ am4core.useTheme(am4themes_animated)
   templateUrl: './globe.component.html',
   styleUrls: ['./globe.component.css']
 })
-export class GlobeComponent {
+export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   private chart: am4maps.MapChart | undefined;
+  private imageSeries: am4maps.MapImageSeries | undefined
+  private _launches: LaunchesDTO = new LaunchesDTO()
 
+  constructor(public _globeService: GlobeService) {
+    this._globeService.getLaunchesForGlobe().subscribe((data: any) => this._launches = data)
+    console.log(this._launches)
+  }
 
+  ngOnInit(): void {
+  }
 
   ngAfterViewInit() {
     this.chart = am4core.create("chartdiv", am4maps.MapChart)
@@ -23,126 +34,79 @@ export class GlobeComponent {
     this.chart.projection = new am4maps.projections.Orthographic()
     this.chart.panBehavior = "rotateLongLat"
     this.chart.mouseWheelBehavior = "none"
-    let imageSeries = this.chart.series.push(new am4maps.MapImageSeries())
-
-    let imageSeriesTemplate = imageSeries.mapImages.template;
-
+    this.imageSeries = this.chart.series.push(new am4maps.MapImageSeries())
+    let imageSeriesTemplate = this.imageSeries.mapImages.template;
+    this._globeService.getLaunchesForGlobe().subscribe((data: any) => this._launches = data)
+    console.log(this._launches)
     let circle = imageSeriesTemplate.createChild(am4core.Circle);
     circle.radius = 5;
-    // circle.fill = am4core.color("red");
-    // circle.stroke = am4core.color("red");
-    // circle.strokeWidth = 2;
-    circle.nonScaling = true;
-    circle.tooltipText = "{title}";
+
+    circle.tooltipText = "{name}";
     imageSeriesTemplate.propertyFields.latitude = "latitude";
     imageSeriesTemplate.propertyFields.longitude = "longitude";
-
-    let circle1 = imageSeries.mapImages.template.createChild(am4core.Circle);
     circle.radius = 3;
     circle.propertyFields.fill = "color";
-    circle.nonScaling = true;
+    let circle2 = this.imageSeries.mapImages.template.createChild(am4core.Circle);
+    circle2.tooltipText = "{name}";
 
-    let circle2 = imageSeries.mapImages.template.createChild(am4core.Circle);
-    circle2.radius = 3;
+    circle2.radius = 10;
     circle2.propertyFields.fill = "color";
-
 
 
     let colorSet = new am4core.ColorSet();
 
-    imageSeries.data = [ {
-      "title": "Brussels",
-      "latitude": 50.8371,
-      "longitude": 4.3676,
-      "color":colorSet.next()
+    this.imageSeries.data = [{
+      "title": "Falcon 9 Block 5 | Axiom Space Mission 2",
+      "latitude": 28.60822681,
+      "longitude": -80.60428186,
+      "color": colorSet.next()
     }, {
-      "title": "Copenhagen",
-      "latitude": 55.6763,
-      "longitude": 12.5681,
-      "color":colorSet.next()
+      "title": "Falcon 9 Block 5 | BADR-8",
+      "latitude": 28.56194122,
+      "longitude": -80.57735736,
+      "color": colorSet.next()
     }, {
-      "title": "Paris",
-      "latitude": 48.8567,
-      "longitude": 2.3510,
-      "color":colorSet.next()
+      "title": "Nuri | NEXTSat-2 & SNIPE",
+      "latitude": 34.431867,
+      "longitude": 127.535069,
+      "color": colorSet.next()
     }, {
-      "title": "Reykjavik",
-      "latitude": 64.1353,
-      "longitude": -21.8952,
-      "color":colorSet.next()
+      "title": "Soyuz 2.1a | Progress MS-23 (84P)",
+      "latitude": 45.996034,
+      "longitude": 63.564003,
+      "color": colorSet.next()
     }, {
-      "title": "Moscow",
-      "latitude": 55.7558,
-      "longitude": 37.6176,
-      "color":colorSet.next()
+      "title": "Soyuz 2.1b/Fregat-M | Kondor-FKA No.1",
+      "latitude": 51.884395,
+      "longitude": 128.333932,
+      "color": colorSet.next()
     }, {
-      "title": "Madrid",
+      "title": "Falcon 9 Block 5 | Starlink Group 6-4",
       "latitude": 40.4167,
       "longitude": -3.7033,
-      "color":colorSet.next()
+      "color": colorSet.next()
     }, {
-      "title": "London",
-      "latitude": 51.5002,
-      "longitude": -0.1262,
-      "url": "http://www.google.co.uk",
-      "color":colorSet.next()
+      "title": "Falcon 9 Block 5 | Starlink Group 6-3",
+      "latitude": 28.56194122,
+      "longitude": -80.57735736,
+      "color": colorSet.next()
     }, {
-      "title": "Peking",
-      "latitude": 39.9056,
-      "longitude": 116.3958,
-      "color":colorSet.next()
+      "title": "Electron | Coming To A Storm Near You (TROPICS-3)",
+      "latitude": -39.262833,
+      "longitude": 177.864469,
+      "color": colorSet.next()
     }, {
-      "title": "New Delhi",
-      "latitude": 28.6353,
-      "longitude": 77.2250,
-      "color":colorSet.next()
+      "title": "Long March 2F/G | Shenzhou 16",
+      "latitude": 40.958093,
+      "longitude": 100.291188,
+      "color": colorSet.next()
     }, {
-      "title": "Tokyo",
-      "latitude": 35.6785,
-      "longitude": 139.6823,
+      "title": "Falcon 9 Block 5 | Starlink Group 5-7",
+      "latitude": 34.632,
+      "longitude": -120.611,
       "url": "http://www.google.co.jp",
-      "color":colorSet.next()
-    }, {
-      "title": "Ankara",
-      "latitude": 39.9439,
-      "longitude": 32.8560,
-      "color":colorSet.next()
-    }, {
-      "title": "Buenos Aires",
-      "latitude": -34.6118,
-      "longitude": -58.4173,
-      "color":colorSet.next()
-    }, {
-      "title": "Brasilia",
-      "latitude": -15.7801,
-      "longitude": -47.9292,
-      "color":colorSet.next()
-    }, {
-      "title": "Ottawa",
-      "latitude": 45.4235,
-      "longitude": -75.6979,
-      "color":colorSet.next()
-    }, {
-      "title": "Washington",
-      "latitude": 38.8921,
-      "longitude": -77.0241,
-      "color":colorSet.next()
-    }, {
-      "title": "Kinshasa",
-      "latitude": -4.3369,
-      "longitude": 15.3271,
-      "color":colorSet.next()
-    }, {
-      "title": "Cairo",
-      "latitude": 30.0571,
-      "longitude": 31.2272,
-      "color":colorSet.next()
-    }, {
-      "title": "Pretoria",
-      "latitude": -25.7463,
-      "longitude": 28.1876,
-      "color":colorSet.next()
-    } ];
+      "color": colorSet.next()
+    }];
 
 
     let polygonSeries = this.chart.series.push(new am4maps.MapPolygonSeries())
