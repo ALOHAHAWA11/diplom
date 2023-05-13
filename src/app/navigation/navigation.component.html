@@ -1,0 +1,33 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" routerLink="/">
+      <img class="logo-img" src="assets/img/iconmonstr-rocket-19.svg">
+    </a>
+  </div>
+
+  <div class="navbar-end">
+    <div class="navbar-item">
+      <div *ngIf="!isAuthenticated()" class="buttons">
+        <a routerLink="/auth" class="button nav-button">
+          Войти
+        </a>
+        <a routerLink="/register" class="button nav-button">
+          Регистрация
+        </a>
+      </div>
+      <div *ngIf="isAuthenticated()">
+        <span class="button nav-greetings">
+          Здравствуйте, {{getUsername()}}!
+        </span>
+        <a routerLink="/statistics" class="button nav-button">
+          Статистика
+        </a>
+        <a (click)="logout()" class="button nav-button">
+          Выйти
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+

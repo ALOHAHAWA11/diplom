@@ -1,0 +1,13 @@
+hr {
+  margin-bottom: -40px;
+}
+
+.content-main {
+  margin-top: 50px;
+}
+
+textarea {
+  width: 100%;
+  resize: none;
+  padding: 5px;
+}

@@ -1,0 +1,102 @@
+<div class="columns is-centered">
+  <div class="column is-half">
+    <div class="card">
+      <div class="card-image">
+        <figure class="image">
+          <img src="{{getLaunch().image}}" alt="Placeholder image">
+        </figure>
+      </div>
+      <div class="card-content">
+        <div class="media">
+          <div class="media-left">
+
+          </div>
+          <div class="media-content">
+            <p class="title is-4">{{getLaunch().name}}</p>
+            <p class="subtitle is-6">{{getLaunch().family}}</p>
+          </div>
+        </div>
+
+        <div class="content content-main">
+          <hr>
+          <div class="columns">
+            <div class="column">
+              <p class="is-4">Код страны: {{getLaunch().country_code}}</p>
+            </div>
+          </div>
+          <hr>
+          <div class="columns">
+            <div class="column">
+              <p class="is-4">Семейство ракет: {{getLaunch().family}}</p>
+            </div>
+          </div>
+          <hr>
+          <div class="columns">
+            <div class="column">
+              <p class="is-4">Начало запуска: {{getLaunch().window_start.toLocaleString()}}</p>
+            </div>
+          </div>
+          <hr>
+          <div class="columns">
+            <div class="column">
+              <p class="is-4">Конец запуска: {{getLaunch().window_end}}</p>
+            </div>
+          </div>
+          <hr>
+          <div class="columns">
+            <div class="column">
+              <p class="is-4">Тип запуска: {{getLaunch().type}}</p>
+            </div>
+          </div>
+          <hr>
+          <div class="columns">
+            <div class="column">
+              <p class="is-4" *ngIf="getLaunch().reusable">Многоразовость: да</p>
+              <p class="is-4" *ngIf="!getLaunch().reusable">Многоразовость: нет</p>
+            </div>
+          </div>
+          <hr>
+          <div class="columns">
+            <div class="column">
+              <p>О летательном аппарате: <a href="{{getLaunch().rocket_wiki_url}}">{{getLaunch().name}}</a></p>
+            </div>
+          </div>
+          <hr>
+          <div class="columns">
+            <div class="column">
+              <p *ngIf="getLaunch().video_urls.length > 0">Ссылка на трансляцию: <a
+                href="{{getLaunch().video_urls}}">{{getLaunch().video_urls}}</a></p>
+              <p *ngIf="getLaunch().video_urls.length == 0">Ссылка на трансляцию: ссылки на трансляцию пока не
+                опубликованы</p>
+            </div>
+          </div>
+          <form method="post" *ngIf="isAuthenticated()">
+          <div class="columns">
+            <div class="column">
+              <h4 class="title">Оставьте свой комментарий:</h4>
+            </div>
+          </div>
+            <div class="columns">
+              <div class="column">
+                <textarea class="textarea" [(ngModel)]="comment"  id="commentArea" name="comment" cols="30" rows="10"></textarea>
+              </div>
+            </div>
+            <div class="field is-grouped">
+              <div class="control">
+                <button #submitButton class="button is-info">Опубликовать</button>
+              </div>
+            </div>
+        </form>
+
+          <div class="columns">
+            <div class="column">
+              <h4 class="title">
+                Комментарии:
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
