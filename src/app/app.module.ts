@@ -18,6 +18,7 @@ import {FormsModule} from "@angular/forms";
 import {TokenInterceptor} from "./service/token.interceptor";
 import {GlobeService} from "./service/globe.service";
 import { StatisticsComponent } from './statistics/statistics.component';
+import {StatisticsService} from "./service/statistics.service";
 
 const appRoutes: Routes = [
   {path: '', component: MainComponent},
@@ -55,7 +56,7 @@ const appRoutes: Routes = [
       multi: true,
       useClass: TokenInterceptor
     },
-
+    StatisticsService
     ],
   bootstrap: [AppComponent]
 })

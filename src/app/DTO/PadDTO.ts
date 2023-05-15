@@ -34,4 +34,13 @@ export class PadDTO {
   public set set_longitude(new_longitude: string) {
     this.longitude = new_longitude;
   }
+
+
+  get get_total_launch_count(): number {
+    return this.total_launch_count;
+  }
+
+  set set_total_launch_count(value: number) {
+    this.total_launch_count = value;
+  }
 }

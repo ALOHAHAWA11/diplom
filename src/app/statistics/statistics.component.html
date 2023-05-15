@@ -1,38 +1,130 @@
 <div class="columns is-centered auth-card">
   <div class="column is-8">
+
     <div class="card">
+
       <div class="card-content">
+        <h3 class="title">Сформировать статистику</h3>
+        <hr>
+
         <div class="columns">
           <div class="column">
-            <h4 class="subtitle">Временные параметры</h4>
+            <h4 class="subtitle">Задайте временной интервал:</h4>
           </div>
         </div>
         <div class="columns">
           <div class="column is-3">
-            <label for="start_date">Начальная дата:   </label>
-            <input class="" type="date" name="start_date" id="start_date">
+            <label for="start_date">Начальная дата: </label>
+            <input [(ngModel)]="start_date"  class="input is-info" type="date" name="start_date" id="start_date">
           </div>
           <div class="column is-3">
-            <label for="end_date">Конечная дата:   </label>
-            <input class="" type="date" name="start_date" id="end_date">
+            <label for="end_date">Конечная дата: </label>
+            <input [(ngModel)]="end_date" class="input is-info" type="date" name="start_date" id="end_date">
           </div>
         </div>
         <div class="columns">
           <div class="column">
-            <h4 class="subtitle">Качественные параметры</h4>
+            <h4 class="subtitle">Задайте параметры:</h4>
           </div>
         </div>
         <div class="columns">
           <div class="column">
-            <h4 class="subtitle">Количественные параметры</h4>
+            <fieldset>
+              <legend>Выберете тип запуска:</legend>
+            </fieldset>
+            <div>
+              <input type="radio" id="government" name="type" value="government"
+                     checked>
+              <label for="government">Государственный запуск</label>
+            </div>
+            <div>
+              <input type="radio" id="commercial" name="type" value="commercial"
+              >
+              <label for="commercial">Коммерческий запуск</label>
+            </div>
+            <div>
+              <input type="radio" id="all_status" name="status" value="all_status"
+              >
+              <label for="all_status">Все</label>
+            </div>
+          </div>
+          <div class="column">
+            <fieldset>
+              <legend>Выберете статус запуска:</legend>
+            </fieldset>
+            <div>
+              <input type="radio" id="go" name="status" value="go"
+                     checked>
+              <label for="go">Готовность к запуску</label>
+            </div>
+            <div>
+              <input type="radio" id="success" name="status" value="success"
+              >
+              <label for="success">Успешный запуск</label>
+            </div>
+            <div>
+              <input type="radio" id="failed" name="status" value="failed"
+              >
+              <label for="failed">Провальный запуск</label>
+            </div>
+            <div>
+              <input type="radio" id="all_options" name="status" value="failed"
+              >
+              <label for="all_options">Все</label>
+            </div>
+          </div>
+          <div class="column">
+            <fieldset>
+              <legend>Введите код страны:</legend>
+            </fieldset>
+            <input class="input is-info" type="text" maxlength="3" placeholder="Прим.: 'RUS'">
+          </div>
+
+          <div class="column ">
+            <legend>Выберете орбиту движения:</legend>
+
+            <div class="select is-info">
+
+              <select>
+                <option value="GEO">Геостационарная орбита</option>
+                <option value="LEO">Низкая околоземная орбита</option>
+                <option value="MEO">Средняя околоземная орбита</option>
+                <option value="HEO">Высокая околоземная орбита</option>
+                <option value="SSO">Солнечно-синхронная орбита</option>
+                <option value="GTO">Геопереходная орбита</option>
+                <option value="GSO">Геосинхронная орбита</option>
+                <option value="HCO">Гелиоцентрическая орбита</option>
+                <option value="HEO">Высокая эллиптическая орбита</option>
+                <option value="PO">Полярная орбита</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="columns">
           <div class="column">
-            <label for="limit">Выборка:   </label>
-            <input id="limit" type="number">
+            <h4 class="subtitle">Задайте размер выборки:</h4>
           </div>
         </div>
+        <div class="columns">
+          <div class="column is-2">
+            <label for="limit">Выборка: </label>
+            <input [(ngModel)]="limit" class="is-info input" id="limit" type="number">
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column is-2">
+            <button (click)="formStatistics()" class="is-info button">Сформировать статистику</button>
+          </div>
+          <div class="column is-1"></div>
+          <div class="column is-2">
+            <button (click)="setParams()" class="is-info button">Применить параметры</button>
+          </div>
+        </div>
+        <div class="columns">
+        <div class="column">
+          <div class="statistics-column" id="chartdiv"></div>
+        </div>
+      </div>
 
       </div>
     </div>

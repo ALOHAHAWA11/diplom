@@ -21,13 +21,14 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   private _launches: LaunchesDTO = new LaunchesDTO()
 
   constructor(public _globeService: GlobeService) {
-    this._globeService.getLaunchesForGlobe().subscribe((data: any) => this._launches = data)
     console.log(this._launches)
   }
 
   ngOnInit(): void {
   }
-
+  public getLaunches() {
+    return this._globeService.getLaunchesForGlobe()
+  }
   ngAfterViewInit() {
     this.chart = am4core.create("chartdiv", am4maps.MapChart)
     this.chart.geodata = am4geodata_worldLow

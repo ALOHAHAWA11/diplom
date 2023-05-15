@@ -5,18 +5,35 @@ import {LaunchesDTO} from "../DTO/LaunchesDTO";
 import {LaunchDTO} from "../DTO/LaunchDTO";
 import {PadDTO} from "../DTO/PadDTO";
 import {RocketDTO} from "../DTO/RocketDTO";
-import {GlobeComponent} from "../globe/globe.component";
-
 
 @Injectable()
-export class GlobeService {
+export class StatisticsService {
 
+  private start_date: Date | undefined = new Date()
+  private end_date: Date | undefined = new Date()
+  private limit: number = 0
   constructor(private _http: HttpClient) {
 
   }
-  public getLaunchesForGlobe(): Observable<LaunchesDTO>{
-    return this._http.get(
-      `https://lldev.thespacedevs.com/2.2.0/launch/?window_start__gte=${new Date().toJSON()}`).pipe(
+  public setLimit(limit: number) {
+    this.limit = limit
+  }
+  public setStartDate(date: Date | undefined) {
+    this.start_date = date
+  }
+
+  public setEndDate(date: Date | undefined) {
+    this.end_date = date
+  }
+
+  public getFilteredLaunches(): Observable<LaunchesDTO>{
+    let url = `https://lldev.thespacedevs.com/2.2.0/launch/`
+    // console.log(this.start_date.toJSON())
+    if (this.start_date || this.end_date) {
+      url += `?window_start__gte=${this.start_date}&window_end__lte=${this.end_date}&limit=${this.limit}`
+    }
+    console.log(url)
+    return this._http.get(url).pipe(
       map((data: any) => {
         let launches: LaunchesDTO = new LaunchesDTO(data['count'],
           data['next'], data['previous'], [])
