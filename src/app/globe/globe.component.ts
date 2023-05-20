@@ -27,7 +27,7 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
   }
   public getLaunches() {
-    return this._globeService.getLaunchesForGlobe()
+    // return this._globeService.getLaunchesForGlobe()
   }
   ngAfterViewInit() {
     this.chart = am4core.create("chartdiv", am4maps.MapChart)

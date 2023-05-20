@@ -2,8 +2,6 @@ import {Component} from '@angular/core';
 import * as am4core from "@amcharts/amcharts4/core"
 import * as am4charts from "@amcharts/amcharts4/charts"
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
-import {GlobeService} from "../service/globe.service";
-import {LaunchesDTO} from "../DTO/LaunchesDTO";
 import {StatisticsService} from "../service/statistics.service";
 
 @Component({
@@ -12,22 +10,50 @@ import {StatisticsService} from "../service/statistics.service";
   styleUrls: ['./statistics.component.css']
 })
 export class StatisticsComponent {
-
-  private _launches: LaunchesDTO = new LaunchesDTO()
-  private _limit: number = 0
+  private _launches: any = []
   private _start_date: undefined | Date
   private _end_date: undefined | Date
+  private _type: any = 'all_status'
+
+  private _status: any = 'all_launches'
+
+  private _countryCode: any = ''
+
+  private _orbit: any = 'ALL'
 
   constructor(private statisticsService: StatisticsService) {
   }
 
-
-  get limit(): number {
-    return this._limit;
+  get type(): any {
+    return this._type;
   }
 
-  set limit(value: number) {
-    this._limit = value;
+  set type(value: any) {
+    this._type = value;
+  }
+
+  get status(): any {
+    return this._status;
+  }
+
+  set status(value: any) {
+    this._status = value;
+  }
+
+  get countryCode(): any {
+    return this._countryCode;
+  }
+
+  set countryCode(value: any) {
+    this._countryCode = value.toUpperCase();
+  }
+
+  get orbit(): any {
+    return this._orbit;
+  }
+
+  set orbit(value: any) {
+    this._orbit = value;
   }
 
   get start_date(): Date | undefined {
@@ -47,50 +73,80 @@ export class StatisticsComponent {
   }
 
   public setParams() {
-    // // @ts-ignore
-    // this._start_date = new Date(this._start_date).toJSON()
-    // // @ts-ignore
-    // this._end_date = new Date(this._end_date).toJSON()
-    console.log(this._end_date, this._start_date)
-    this.statisticsService.setLimit(this._limit)
     // @ts-ignore
     this.statisticsService.setStartDate(new Date(this._start_date).toJSON())
     // @ts-ignore
     this.statisticsService.setEndDate(new Date(this._end_date).toJSON())
-    this.statisticsService.getFilteredLaunches().subscribe((data) => this._launches = data)
+    // @ts-ignore
+    this.getYears(new Date(this._end_date), new Date(this._start_date))
+    this._launches = this.statisticsService.getFilteredLaunches()
   }
 
+  public getYears(end: Date, start: Date) {
+    return end.getUTCFullYear() - start.getFullYear()
+  }
 
-  public formIntervals() {
-    // @ts-ignore
-    let difference = new Date(this._end_date).getFullYear() - new Date(this._start_date).getFullYear()
-    let data = []
-    for (let launch of this._launches.launches) {
-      if (launch.window_start.getFullYear())
-        data.push({
-
-        })
-
-
+  public formInterval(startYear: number, endYear: number) {
+    let years = []
+    while (startYear <= endYear) {
+      years.push(startYear)
+      startYear += 1
     }
-
-
+    return years
   }
-  public formStatistics() {
-    // @ts-ignore
-    console.log()
 
+  public formStatistics() {
     am4core.useTheme(am4themes_animated)
     let chart = am4core.create("chartdiv", am4charts.XYChart)
-    chart.data = [];
-    console.log(this._launches)
-    for (let launch of this._launches.launches) {
-      console.log(launch)
-      chart.data.push({
-        'total_launch_count': launch.pad.get_total_launch_count,
-        'year': new Date(launch.window_start).getMonth()
-      })
 
+    // @ts-ignore
+    let years = this.formInterval(new Date(this._start_date).getUTCFullYear(), new Date(this._end_date).getFullYear())
+    let dictionary = {}
+    for (let year of years) {
+      // @ts-ignore
+      dictionary[`${year}`] = 0
+      chart.data.push({
+        'year': year,
+        'count': 0
+      })
+    }
+
+    console.log(dictionary)
+
+    console.log(chart.data)
+    console.log(this._launches)
+
+
+
+
+    for (let launch of this._launches) {
+      if (this._type != 'all_status') {
+        if (launch['launch_service_provider'] != this._type) continue
+      }
+      if (this._status != 'all_launches') {
+        if (launch['_status']['name'] != this._status) continue
+      }
+      if (this._countryCode != '') {
+        if (launch['pad']['country_code'] != this._countryCode) continue
+      }
+      if (this._orbit != 'ALL') {
+        if (launch['mission']['_orbit']['abbrev'] != this._orbit) continue
+      }
+      console.log(this._countryCode)
+      console.log(launch['pad']['country_code'] )
+      for (let year in dictionary) {
+        let window_start = new Date(launch['window_start']).toJSON().split('-')[0]
+        console.log('here')
+        console.log(window_start)
+        console.log(launch)
+        if (window_start == year) {
+          // @ts-ignore
+          dictionary[year] += 1
+          for (let data of chart.data) {
+            if (data['year'] == year) data['count'] += 1
+          }
+        }
+      }
     }
     console.log(chart.data)
     let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
@@ -108,9 +164,8 @@ export class StatisticsComponent {
 
     let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
-// Create series
     let series = chart.series.push(new am4charts.ColumnSeries());
-    series.dataFields.valueY = "total_launch_count";
+    series.dataFields.valueY = "count";
     series.dataFields.categoryX = "year";
     series.name = "Count";
     series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";

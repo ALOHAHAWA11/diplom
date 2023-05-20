@@ -19,13 +19,15 @@ import {TokenInterceptor} from "./service/token.interceptor";
 import {GlobeService} from "./service/globe.service";
 import { StatisticsComponent } from './statistics/statistics.component';
 import {StatisticsService} from "./service/statistics.service";
+import { ArchiveComponent } from './archive/archive.component';
 
 const appRoutes: Routes = [
   {path: '', component: MainComponent},
   {path: 'launch/:id', component: LaunchComponent},
   {path: 'auth', component: AuthenticationComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'statistics', component: StatisticsComponent}
+  {path: 'statistics', component: StatisticsComponent},
+  {path: 'archive', component: ArchiveComponent}
 ]
 
 @NgModule({
@@ -40,6 +42,7 @@ const appRoutes: Routes = [
     AuthenticationComponent,
     RegisterComponent,
     StatisticsComponent,
+    ArchiveComponent,
   ],
   imports: [
     BrowserModule,

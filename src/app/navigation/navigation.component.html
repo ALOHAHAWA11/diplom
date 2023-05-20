@@ -8,6 +8,9 @@
   <div class="navbar-end">
     <div class="navbar-item">
       <div *ngIf="!isAuthenticated()" class="buttons">
+        <a routerLink="/archive" class="button nav-button">
+          Архив
+        </a>
         <a routerLink="/auth" class="button nav-button">
           Войти
         </a>

@@ -33,17 +33,17 @@
               <legend>Выберете тип запуска:</legend>
             </fieldset>
             <div>
-              <input type="radio" id="government" name="type" value="government"
+              <input [(ngModel)]="type" type="radio" id="government" name="type" value="government"
                      checked>
               <label for="government">Государственный запуск</label>
             </div>
             <div>
-              <input type="radio" id="commercial" name="type" value="commercial"
+              <input [(ngModel)]="type" type="radio" id="commercial" name="type" value="commercial"
               >
               <label for="commercial">Коммерческий запуск</label>
             </div>
             <div>
-              <input type="radio" id="all_status" name="status" value="all_status"
+              <input [(ngModel)]="type" type="radio" id="all_status" name="type" value="all_status"
               >
               <label for="all_status">Все</label>
             </div>
@@ -53,22 +53,22 @@
               <legend>Выберете статус запуска:</legend>
             </fieldset>
             <div>
-              <input type="radio" id="go" name="status" value="go"
+              <input [(ngModel)]="status" type="radio" id="go" name="status" value="go"
                      checked>
               <label for="go">Готовность к запуску</label>
             </div>
             <div>
-              <input type="radio" id="success" name="status" value="success"
+              <input [(ngModel)]="status" type="radio" id="success" name="status" value="Launch Successful"
               >
               <label for="success">Успешный запуск</label>
             </div>
             <div>
-              <input type="radio" id="failed" name="status" value="failed"
+              <input [(ngModel)]="status" type="radio" id="failed" name="status" value="Launch Failure"
               >
               <label for="failed">Провальный запуск</label>
             </div>
             <div>
-              <input type="radio" id="all_options" name="status" value="failed"
+              <input [(ngModel)]="status" type="radio" id="all_options" name="status" value="all_launches"
               >
               <label for="all_options">Все</label>
             </div>
@@ -77,7 +77,7 @@
             <fieldset>
               <legend>Введите код страны:</legend>
             </fieldset>
-            <input class="input is-info" type="text" maxlength="3" placeholder="Прим.: 'RUS'">
+            <input [(ngModel)]="countryCode" class="input is-info" type="text" maxlength="3" placeholder="Прим.: 'RUS'">
           </div>
 
           <div class="column ">
@@ -85,7 +85,8 @@
 
             <div class="select is-info">
 
-              <select>
+              <select [(ngModel)]="orbit">
+                <option value="ALL">Все</option>
                 <option value="GEO">Геостационарная орбита</option>
                 <option value="LEO">Низкая околоземная орбита</option>
                 <option value="MEO">Средняя околоземная орбита</option>
@@ -98,17 +99,6 @@
                 <option value="PO">Полярная орбита</option>
               </select>
             </div>
-          </div>
-        </div>
-        <div class="columns">
-          <div class="column">
-            <h4 class="subtitle">Задайте размер выборки:</h4>
-          </div>
-        </div>
-        <div class="columns">
-          <div class="column is-2">
-            <label for="limit">Выборка: </label>
-            <input [(ngModel)]="limit" class="is-info input" id="limit" type="number">
           </div>
         </div>
         <div class="columns">

@@ -1,0 +1,24 @@
+<div *ngFor="let record of getLaunches()" class="columns is-centered" style="margin-bottom: 25px;">
+  <div class="card column is-7 is-half">
+    <div class="card-content">
+      <p>Название запуска: {{record['launch']['name']}}</p>
+      <p>Название запуска: {{record['launch']['window_start'].toLocaleString()}}</p>
+      <p>Название запуска: {{record['launch']['window_end'].toLocaleString()}}</p>
+
+      <hr>
+      <div style="
+                overflow-x: hidden;
+                overflow-y: auto;
+                text-align:justify;">
+
+        <div *ngFor="let comment of record['comments']">
+          <p class="title is-6">{{comment['author_id']}} в {{comment['published_date'].toLocaleString()}}
+            сказал:</p>
+          <div>
+            {{comment['content']}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

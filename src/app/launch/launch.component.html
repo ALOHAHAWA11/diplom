@@ -71,28 +71,54 @@
             </div>
           </div>
           <form method="post" *ngIf="isAuthenticated()">
-          <div class="columns">
-            <div class="column">
-              <h4 class="title">Оставьте свой комментарий:</h4>
-            </div>
-          </div>
             <div class="columns">
               <div class="column">
-                <textarea class="textarea" [(ngModel)]="comment"  id="commentArea" name="comment" cols="30" rows="10"></textarea>
+                <h4 class="title">Оставьте свой комментарий:</h4>
               </div>
+            </div>
+            <div class="columns">
+              <form action="post" #commentForm="ngForm">
+                <div class="column">
+                        <textarea class="textarea" [(ngModel)]="comment" id="commentArea" name="comment" cols="90"
+                                  rows="10"></textarea>
+                </div>
+              </form>
             </div>
             <div class="field is-grouped">
               <div class="control">
-                <button #submitButton class="button is-info">Опубликовать</button>
+                <button (click)="submitComment(commentForm)" #submitButton class="button is-info">Опубликовать</button>
               </div>
             </div>
-        </form>
+          </form>
 
           <div class="columns">
             <div class="column">
               <h4 class="title">
                 Комментарии:
               </h4>
+            </div>
+          </div>
+          <div class="columns" *ngFor="let comment of comments">
+            <div class="column">
+              <div class="card is-12">
+                <div class="card-content">
+                  <p class="title is-6">{{comment['author_id']}} в {{comment['published_date'].toLocaleString()}}
+                    сказал:</p>
+                  <div class="columns">
+                    <div class="column is-8 content">
+                      {{comment['content']}}
+                    </div>
+                  </div>
+                  <div class="columns">
+                    <div class="column is-2" style="width: 12%;">
+                      <button class="button is-warning">Изменить</button>
+                    </div>
+                    <div class="column is-2" style="width: 12%;">
+                      <button class="button is-danger">Удалить</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
