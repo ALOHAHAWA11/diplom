@@ -14,7 +14,6 @@ export class ArchiveComponent {
   }
 
   public getLaunches() {
-    console.log(this._archive)
     return this._archive
   }
 }
